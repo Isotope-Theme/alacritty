@@ -1,0 +1,40 @@
+# Isotope Theme - alacritty color config
+# Arden Rasmussen (https://github.com/Isotope-Theme/alacritty)
+colors:
+  primary:
+    background: '#ECEFF1'
+    foreground: '#263238'
+  cursor:
+    background: '#ECEFF1'
+    cursor:     '#313D43'
+  selection:
+    background: '#DDE1E3'
+    text:       '#3D484E'
+  normal:
+    black:   '#3D484E'
+    red:     '#F44336'
+    green:   '#4CAF50'
+    yellow:  '#FFEB3B'
+    blue:    '#2196F3'
+    magenta: '#9C27B0'
+    cyan:    '#00BCD4'
+    white:   '#CFD3D6'
+  bright:
+    black:   '#495459'
+    red:     '#FF7961'
+    green:   '#80E27E'
+    yellow:  '#FFFF72'
+    blue:    '#6EC6FF'
+    magenta: '#D05CE3'
+    cyan:    '#62EFFF'
+    white:   '#DDE1E3'
+  dim:
+    black:   '#313D43'
+    red:     '#BA000D'
+    green:   '#087F23'
+    yellow:  '#C8B900'
+    blue:    '#0069C0'
+    magenta: '#6A0080'
+    cyan:    '#008BA3'
+    white:   '#C1C6C9'
+# Isotope Theme - End
