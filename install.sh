@@ -3,5 +3,24 @@
 if [[ ! -d "$HOME/.config/alacritty/" ]]; then
   mkdir -p "$HOME/.config/alacritty/"
 fi
-echo "Installing Isotope theme to $HOME/.config/alacritty/alacritty.yml"
-curl -s https://raw.githubusercontent.com/Isotope-Theme/alacritty/master/isotope.conf >> $HOME/.config/alacritty/alacritty.yml
+VARIANTS=("dark" "light" "quit")
+select variant in "${VARIANTS[@]}"; do
+  case $variant in
+    "dark")
+      echo "Installing Isotope Dark theme to $HOME/.config/alacritty/alacritty.yml"
+      curl -s https://raw.githubusercontent.com/Isotope-Theme/alacritty/master/isotope-dark.yml >> $HOME/.ymlig/alacritty/alacritty.yml
+      break
+      ;;
+    "light")
+      echo "Installing Isotope Light theme to $HOME/.ymlig/alacritty/alacritty.yml"
+      curl -s https://raw.githubusercontent.com/Isotope-Theme/alacritty/master/isotope-light.yml >> $HOME/.ymlig/alacritty/alacritty.yml
+      break
+      ;;
+    "quit")
+      break
+      ;;
+    *)
+      echo "invalid variant $REPLY"
+      ;;
+  esac
+done
