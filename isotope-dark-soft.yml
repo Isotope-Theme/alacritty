@@ -1,0 +1,32 @@
+# Isotope Theme - Begin
+# Alacritty Dark Soft Variant
+# Arden Rasmussen (https://github.com/Isotope-Theme/alacritty)
+colors:
+  primary:
+    background: '#121D32'
+    foreground: '#E0E3E5'
+  cursor:
+    background: '#30454E'
+    cursor:     '#E0E3E5'
+  selection:
+    background: '#415A66'
+    text:       '#E0E3E5'
+  normal:
+    black:   '#213038'
+    red:     '#A00000'
+    green:   '#6F3700'
+    yellow:  '#005600'
+    blue:    '#004B9D'
+    magenta: '#005267'
+    cyan:    '#7F0094'
+    white:   '#899DA7'
+  bright:
+    black:   '#415A66'
+    red:     '#E23029'
+    green:   '#A96800'
+    yellow:  '#1B882B'
+    blue:    '#0078D1'
+    magenta: '#008299'
+    cyan:    '#B744CB'
+    white:   '#C2CBCF'
+# Isotope Theme - End

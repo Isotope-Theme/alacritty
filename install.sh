@@ -1,19 +1,18 @@
 #!/bin/bash
 
-if [[ ! -d "$HOME/.config/alacritty/" ]]; then
-  mkdir -p "$HOME/.config/alacritty/"
+# Common {{{
+LOCAL=0
+if [[ -d ".git" ]] && hash git 2>/dev/null; then
+  remote=$(git remote get-url origin 2>/dev/null)
+  [[ "$remote" == *"Isotope-Theme/alacritty"* ]] && LOCAL=1
 fi
+
 VARIANTS=("dark" "light" "quit")
+VARIANT=""
 select variant in "${VARIANTS[@]}"; do
   case $variant in
-    "dark")
-      echo "Installing Isotope Dark theme to $HOME/.config/alacritty/alacritty.yml"
-      curl -s https://raw.githubusercontent.com/Isotope-Theme/alacritty/master/isotope-dark.yml >> $HOME/.config/alacritty/alacritty.yml
-      break
-      ;;
-    "light")
-      echo "Installing Isotope Light theme to $HOME/.config/alacritty/alacritty.yml"
-      curl -s https://raw.githubusercontent.com/Isotope-Theme/alacritty/master/isotope-light.yml >> $HOME/.config/alacritty/alacritty.yml
+    "dark"|"light")
+      VARIANT=$variant
       break
       ;;
     "quit")
@@ -24,3 +23,49 @@ select variant in "${VARIANTS[@]}"; do
       ;;
   esac
 done
+[[ -z "$VARIANT" ]] && exit 0
+
+CONTRASTS=("soft" "medium" "hard" "quit")
+CONTRAST=""
+select contrast in "${CONTRASTS[@]}"; do
+  case $contrast in
+    "soft"|"medium"|"hard")
+      CONTRAST=$contrast
+      break
+      ;;
+    "quit")
+      break
+      ;;
+    *)
+      echo "invalid contrast $REPLY"
+      ;;
+  esac
+done
+[[ -z "$CONTRAST" ]] && exit 0
+# }}}
+
+CONFIG_FILES=("$XDG_CONFIG_HOME/alacritty/alacritty.yml" "$XDG_CONFIG_HOME/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml" "$HOME/.alacritty.yml")
+CONFIG_FENCE=("# Isotope Theme - Begin" "# Isotope Theme - End")
+
+CONFIG_FILE="${CONFIG_FILES[0]}"
+for file in "${CONFIG_FILES[@]}"; do
+  [[ -f "$file" ]] && CONFIG_FILE="$file" && break
+done
+
+[[ ! -d "$(dirname $CONFIG_FILE)" ]] && mkdir -p "$(dirname $CONFIG_FILE)"
+[[ ! -f "$CONFIG_FILE" ]] && touch "$CONFIG_FILE"
+
+echo "Installing Isotope $VARIANT-$CONTRAST theme to $CONFIG_FILE"
+
+if [[ $LOCAL == 1 ]]; then
+  SOURCE=$(cat "isotope-$VARIANT-$CONTRAST.yml")
+else
+  SOURCE=$(curl -s "https://raw.githubusercontent.com/Isotope-Theme/alacritty/master/isotope-$VARIANT-$CONTRAST.yml")
+fi
+SOURCE=$(sed ':a;N;$!ba;s/\n/\\n/g' <<< "$SOURCE")
+
+if grep -Fxq "${CONFIG_FENCE[0]}" "$CONFIG_DIR/$CONFIG_FILE"; then
+  sed -i "/${CONFIG_FENCE[0]}/,/${CONFIG_FENCE[1]}/c$SOURCE" "$CONFIG_FILE"
+else
+  echo "$SOURCE" >> "$CONFIG_FILE"
+fi
