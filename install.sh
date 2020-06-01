@@ -62,9 +62,8 @@ if [[ $LOCAL == 1 ]]; then
 else
   SOURCE=$(curl -s "https://raw.githubusercontent.com/Isotope-Theme/alacritty/master/isotope-$VARIANT-$CONTRAST.yml")
 fi
-SOURCE=$(sed ':a;N;$!ba;s/\n/\\n/g' <<< "$SOURCE")
-
 if grep -Fxq "${CONFIG_FENCE[0]}" "$CONFIG_DIR/$CONFIG_FILE"; then
+  SOURCE=$(sed ':a;N;$!ba;s/\n/\\n/g' <<< "$SOURCE")
   sed -i "/${CONFIG_FENCE[0]}/,/${CONFIG_FENCE[1]}/c$SOURCE" "$CONFIG_FILE"
 else
   echo "$SOURCE" >> "$CONFIG_FILE"
